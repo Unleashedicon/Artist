@@ -80,7 +80,7 @@ export function Chorus({ onReplay }: Props) {
       <div
         key={`lyric-${step}`}
         style={{
-          position: 'absolute', left: 20, right: 20, bottom: '12%',
+          position: 'absolute', left: 20, right: 20, bottom: '22%',
           textAlign: 'center', animation: 'capIn 1.1s ease-out both',
         }}
       >

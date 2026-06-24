@@ -51,7 +51,7 @@ export function MsJackson({ onComplete }: Props) {
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0.1) 55%, rgba(0,0,0,0.88) 100%)' }} />
           <div style={{ position: 'absolute', inset: '-20%', pointerEvents: 'none', mixBlendMode: 'overlay', opacity: 0.065, backgroundImage: grain, animation: 'grainShift 1.1s steps(3) infinite' }} />
 
-          <div style={{ position: 'absolute', left: 20, right: 20, bottom: '10%', textAlign: 'center', animation: 'capIn 1.1s ease-out both' }}>
+          <div style={{ position: 'absolute', left: 20, right: 20, bottom: '22%', textAlign: 'center', animation: 'capIn 1.1s ease-out both' }}>
             <div style={{ fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', color: '#FF6B5E', fontWeight: 700, marginBottom: 2 }}>
               Ms. Jackson
             </div>
@@ -81,7 +81,7 @@ export function MsJackson({ onComplete }: Props) {
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0.1) 55%, rgba(0,0,0,0.88) 100%)' }} />
           <div style={{ position: 'absolute', inset: '-20%', pointerEvents: 'none', mixBlendMode: 'overlay', opacity: 0.065, backgroundImage: grain, animation: 'grainShift 1.1s steps(3) infinite' }} />
 
-          <div style={{ position: 'absolute', left: 20, right: 20, bottom: '10%', textAlign: 'center', animation: 'capIn 1.1s ease-out both' }}>
+          <div style={{ position: 'absolute', left: 20, right: 20, bottom: '22%', textAlign: 'center', animation: 'capIn 1.1s ease-out both' }}>
             <div style={{ fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', color: '#E8B04B', fontWeight: 700, marginBottom: 2 }}>
               Roddo
             </div>
