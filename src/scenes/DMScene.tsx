@@ -37,10 +37,10 @@ export function DMScene({ onComplete }: Props) {
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
-    const t1 = setTimeout(() => setLyric(2), 5000)
-    const t2 = setTimeout(() => setKaishaTyping(true), 7000)
-    const t3 = setTimeout(() => { setKaishaTyping(false); setShowSeen(true) }, 9500)
-    const t4 = setTimeout(() => setCanTap(true), 10500)
+    const t1 = setTimeout(() => setLyric(2), 3500)
+    const t2 = setTimeout(() => setKaishaTyping(true), 2000)
+    const t3 = setTimeout(() => { setKaishaTyping(false); setShowSeen(true) }, 3800)
+    const t4 = setTimeout(() => setCanTap(true), 4600)
     return () => { [t1, t2, t3, t4].forEach(clearTimeout) }
   }, [])
 
