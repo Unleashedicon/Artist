@@ -51,7 +51,7 @@ export function IncomingCall({ onAccept, onDecline }: Props) {
         display: 'flex', justifyContent: 'space-between',
         padding: '18px 28px 0', fontSize: 14, fontWeight: 600,
       }}>
-        <span>9:41</span>
+        <span>12:03</span>
         <span style={{ letterSpacing: 1 }}>5G ▮▮▮</span>
       </div>
 
@@ -93,11 +93,9 @@ export function IncomingCall({ onAccept, onDecline }: Props) {
           borderRadius: 12,
           padding: '10px 18px',
         }}>
-          <div style={{
-            fontSize: 15, fontWeight: 700, letterSpacing: 0.1,
-            color: 'rgba(255,255,255,0.92)', lineHeight: 1.35,
-          }}>
-            "She call my phone, I don't pick up"
+          <div style={{ fontSize: 15, fontWeight: 700, letterSpacing: 0.1, color: 'rgba(255,255,255,0.92)', lineHeight: 1.5 }}>
+            "You say you call, I don't pick up
+            <br />it's after 10 you wildin'"
           </div>
         </div>
       </div>

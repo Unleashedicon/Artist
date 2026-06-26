@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Hardest Truth — Jubet</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  background:#0a0a0a;min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+.phone{
+  width:375px;height:812px;background:#000;border-radius:44px;
+  overflow:hidden;position:relative;
+  box-shadow:0 0 0 1px rgba(255,255,255,.08),0 0 0 10px #111,
+    0 0 0 11px rgba(255,255,255,.06),0 60px 120px rgba(0,0,0,.9);
+}
+.status{
+  position:absolute;top:0;left:0;right:0;height:44px;z-index:200;
+  pointer-events:none;display:flex;align-items:center;
+  justify-content:space-between;padding:0 22px;
+  font-size:13px;font-weight:600;color:#fff;
+}
+.sc{position:absolute;inset:0;background:#000;display:none;flex-direction:column;}
+.sc.on{display:flex;}
+.lyric{
+  position:absolute;bottom:16px;left:0;right:0;text-align:center;
+  font-size:11px;color:rgba(255,255,255,.25);letter-spacing:.5px;
+  pointer-events:none;z-index:10;padding:0 20px;
+}
+/* dm header */
+.dh{display:flex;align-items:center;padding:52px 16px 12px;gap:10px;
+  border-bottom:1px solid rgba(255,255,255,.05);flex-shrink:0;background:#000;z-index:2;}
+.dback{font-size:24px;color:#fff;margin-right:2px;line-height:1;}
+.dinfo{flex:1;min-width:0;}
+.dname{font-size:15px;font-weight:600;color:#fff;}
+.dsub{font-size:12px;color:#555;}
+.dicons{display:flex;gap:18px;font-size:20px;color:#fff;}
+/* message area — dark wallpaper */
+.ma{
+  flex:1;padding:12px 16px;display:flex;flex-direction:column;gap:6px;overflow:hidden;
+  background-color:#0a0a0f;
+  background-image:
+    radial-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+    radial-gradient(rgba(255,255,255,.015) 1px, transparent 1px);
+  background-size:24px 24px, 12px 12px;
+  background-position:0 0, 6px 6px;
+}
+/* date divider */
+.div-line{
+  text-align:center;font-size:11px;color:#444;padding:4px 0 6px;
+  position:relative;
+}
+.div-line::before,.div-line::after{
+  content:'';position:absolute;top:50%;width:28%;height:1px;background:rgba(255,255,255,.06);
+}
+.div-line::before{left:0;}.div-line::after{right:0;}
+/* bubbles */
+.br{display:flex;align-items:flex-end;gap:6px;}
+.br.s{flex-direction:row-reverse;}
+.b{
+  max-width:240px;padding:10px 14px;border-radius:20px;
+  font-size:14px;line-height:1.4;color:#fff;
+  opacity:0;transform:scale(.85);transition:opacity .2s,transform .2s;
+}
+.b.v{opacity:1;transform:scale(1);}
+.b.r{background:#262626;border-bottom-left-radius:4px;}
+.b.s{background:linear-gradient(135deg,#8134AF,#C13584);border-bottom-right-radius:4px;}
+/* history bubbles — instantly visible, slightly faded */
+.b.hist{opacity:.55!important;transform:scale(1)!important;transition:none!important;}
+/* typing */
+.ty{display:flex;gap:4px;align-items:center;background:#262626;
+  border-radius:20px;border-bottom-left-radius:4px;
+  padding:12px 14px;width:fit-content;
+  opacity:0;transform:scale(.85);transition:opacity .2s,transform .2s;}
+.ty.v{opacity:1;transform:scale(1);}
+.dot{width:6px;height:6px;border-radius:50%;background:#666;animation:dp 1.2s ease-in-out infinite;}
+.dot:nth-child(2){animation-delay:.2s;}.dot:nth-child(3){animation-delay:.4s;}
+@keyframes dp{0%,100%{opacity:.25;}50%{opacity:1;}}
+/* avatars */
+.av{border-radius:50%;object-fit:cover;flex-shrink:0;}
+.avfb{border-radius:50%;background:#333;display:flex;align-items:center;
+  justify-content:center;color:#fff;font-weight:600;flex-shrink:0;}
+/* story ring */
+.ring{padding:3px;border-radius:50%;
+  background:conic-gradient(from 60deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888,#f09433);}
+.ringi{padding:2.5px;background:#000;border-radius:50%;}
+/* inbox */
+.ibxh{padding:52px 16px 14px;display:flex;justify-content:space-between;align-items:center;
+  border-bottom:1px solid rgba(255,255,255,.05);flex-shrink:0;}
+.irow{display:flex;align-items:center;gap:12px;padding:10px 16px;
+  opacity:0;transform:translateY(-8px);transition:opacity .22s,transform .22s;}
+.irow.v{opacity:1;transform:translateY(0);}
+.irow.dim{opacity:.38!important;}
+.irow.tap{background:rgba(255,255,255,.07);}
+.iin{flex:1;min-width:0;}
+.iname{font-size:14px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.iprev{font-size:13px;color:#555;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.imet{display:flex;flex-direction:column;align-items:flex-end;gap:5px;}
+.itime{font-size:12px;color:#555;}
+.udot{width:9px;height:9px;border-radius:50%;background:#C13584;}
+/* notification */
+.notif{position:absolute;top:-70px;left:12px;right:12px;z-index:50;
+  background:#1c1c1e;border-radius:14px;padding:11px 14px;
+  display:flex;align-items:center;gap:10px;
+  box-shadow:0 6px 24px rgba(0,0,0,.7);
+  transition:top .38s cubic-bezier(.34,1.4,.64,1);}
+.notif.v{top:52px;}
+.ntxt{font-size:13px;color:#fff;line-height:1.35;}
+/* warning */
+.warn{background:#1a1a1a;margin:6px 12px;border-radius:10px;
+  padding:9px 12px;font-size:11px;color:#777;line-height:1.4;flex-shrink:0;}
+/* amara typing */
+.atyp{position:absolute;bottom:72px;right:18px;display:none;z-index:5;}
+.atyp .ty{background:linear-gradient(135deg,#8134AF,#C13584);opacity:1;transform:scale(1);}
+.atyp .dot{background:rgba(255,255,255,.7);}
+/* TAP LAYER */
+#taplayer{position:absolute;inset:0;background:#000;z-index:300;display:none;flex-direction:column;}
+.taprow{display:flex;align-items:center;gap:12px;padding:11px 16px;transition:background .15s;}
+.taprow.tapping{background:rgba(255,255,255,.07);}
+.req-sep{padding:10px 16px 4px;font-size:12px;color:#555;font-weight:600;letter-spacing:.03em;}
+/* FADE + ENDING */
+#fog{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;z-index:500;}
+#fog.dark{opacity:1;}
+#endsc{position:absolute;inset:0;z-index:600;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:10px;pointer-events:none;}
+.el{opacity:0;transition:opacity .5s;text-align:center;}
+#el1{font-size:14px;color:#666;}
+#el2{font-size:11px;color:#444;}
+.el.v{opacity:1;}
+#rbtn{margin-top:18px;background:transparent;border:1px solid rgba(255,255,255,.25);
+  color:#fff;font-size:12px;letter-spacing:.5px;padding:7px 20px;
+  border-radius:20px;cursor:pointer;opacity:0;transition:opacity .4s;pointer-events:none;}
+#rbtn.v{opacity:1;pointer-events:all;}
+/* pregnancy fallback */
+.pt{width:160px;height:55px;background:#fff;border-radius:10px;
+  display:flex;align-items:center;padding:0 12px;gap:8px;}
+.pts{flex:1;height:5px;background:#e0e0e0;border-radius:3px;}
+.ptw{width:34px;height:38px;background:#f2f2f2;border-radius:5px;
+  border:1px solid #ddd;display:flex;align-items:center;justify-content:center;gap:4px;}
+.ptl{width:3px;height:22px;background:#ff69b4;border-radius:2px;}
+</style>
+</head>
+<body>
+<div class="phone">
+<div class="status"><span>9:41</span><span>5G ▮▮▮</span></div>
+
+<!-- S1: Graduation — 3s -->
+<div class="sc on" id="s1">
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;">
+    <div class="ring"><div class="ringi">
+      <img class="av" src="https://randomuser.me/api/portraits/women/44.jpg" width="90" height="90"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="avfb" style="width:90px;height:90px;font-size:28px;display:none;">A</div>
+    </div></div>
+    <div style="font-size:18px;font-weight:600;color:#fff;margin-top:6px;">Amara</div>
+    <div style="font-size:13px;color:#555;">Class of 2024</div>
+  </div>
+  <div class="lyric">after school life is the hardest experience</div>
+</div>
+
+<!-- S2: Mum -->
+<div class="sc" id="s2">
+  <div class="dh">
+    <span class="dback">‹</span>
+    <img class="av" src="https://randomuser.me/api/portraits/women/65.jpg" width="36" height="36"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <div class="avfb" style="width:36px;height:36px;display:none;">M</div>
+    <div class="dinfo"><div class="dname">Mum</div><div class="dsub">Active now</div></div>
+    <div class="dicons"><span>📞</span><span>📹</span></div>
+  </div>
+  <div class="ma" id="s2m"></div>
+  <div class="lyric">whoever feeds you controls you</div>
+</div>
+
+<!-- S3: Zuri -->
+<div class="sc" id="s3">
+  <div class="dh">
+    <span class="dback">‹</span>
+    <img class="av" src="https://randomuser.me/api/portraits/women/37.jpg" width="36" height="36"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <div class="avfb" style="width:36px;height:36px;display:none;">Z</div>
+    <div class="dinfo"><div class="dname">Zuri 💜</div><div class="dsub">Active now</div></div>
+    <div class="dicons"><span>📞</span><span>📹</span></div>
+  </div>
+  <div class="ma" id="s3m"></div>
+  <div class="lyric">spiritual life hits harder than physical life</div>
+</div>
+
+<!-- S4: Inbox -->
+<div class="sc" id="s4">
+  <div class="notif" id="s4n">
+    <span style="font-size:24px;line-height:1;">🚗💨</span>
+    <div class="ntxt">Mr. K 🚗💨 sent you a<br><strong>message request</strong></div>
+  </div>
+  <div class="ibxh">
+    <span style="font-size:20px;font-weight:700;color:#fff;">Messages</span>
+    <span style="font-size:14px;color:#8134AF;">Requests (1)</span>
+  </div>
+  <div id="s4box" style="flex:1;overflow:hidden;"></div>
+  <div class="lyric">being everywhere gets you nowhere</div>
+</div>
+
+<!-- S5: Mum "I tried" -->
+<div class="sc" id="s5">
+  <div class="dh">
+    <span class="dback">‹</span>
+    <img class="av" src="https://randomuser.me/api/portraits/women/65.jpg" width="36" height="36"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <div class="avfb" style="width:36px;height:36px;display:none;">M</div>
+    <div class="dinfo"><div class="dname">Mum</div><div class="dsub">Active 2h ago</div></div>
+    <div class="dicons"><span>📞</span><span>📹</span></div>
+  </div>
+  <div class="ma" id="s5m"></div>
+  <div class="lyric">our parents also tried not to be poor</div>
+</div>
+
+<!-- S6: Mr. K -->
+<div class="sc" id="s6" style="position:relative;">
+  <div class="dh">
+    <span class="dback">‹</span>
+    <div class="avfb" style="width:36px;height:36px;font-size:16px;background:#1a1a1a;">🚗💨</div>
+    <div class="dinfo"><div class="dname">Mr. K 🚗💨</div><div class="dsub">Message Request</div></div>
+    <div class="dicons"><span>📞</span><span>📹</span></div>
+  </div>
+  <div class="warn">You don't follow each other — be careful with messages from people you don't know.</div>
+  <div class="ma" id="s6m"></div>
+  <div class="atyp" id="s6at">
+    <div class="ty"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+  </div>
+  <div class="lyric">big money never comes clean</div>
+</div>
+
+<!-- TAP TRANSITION LAYER -->
+<div id="taplayer">
+  <div style="height:44px;"></div>
+  <div style="padding:8px 16px 14px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.05);">
+    <span style="font-size:20px;font-weight:700;color:#fff;">Messages</span>
+    <span style="font-size:14px;color:#8134AF;">Requests (1)</span>
+  </div>
+  <div class="req-sep">Requests</div>
+  <div class="taprow" data-key="mrk" style="border-bottom:1px solid rgba(255,255,255,.04);margin-bottom:4px;">
+    <div class="avfb" style="width:44px;height:44px;font-size:18px;background:#1a1a1a;flex-shrink:0;">🚗💨</div>
+    <div class="iin">
+      <div class="iname">Mr. K 🚗💨</div>
+      <div class="iprev" style="color:#8134AF;font-size:12px;">Message Request · 1 new</div>
+    </div>
+    <div class="imet"><div class="itime">now</div></div>
+  </div>
+  <div id="taprows"></div>
+</div>
+
+<!-- FADE -->
+<div id="fog" style="transition:opacity 1s ease;"></div>
+<!-- ENDING -->
+<div id="endsc">
+  <div class="el" id="el1">she never replied.</div>
+  <div class="el" id="el2">the hardest truth.</div>
+  <button id="rbtn" onclick="restart()">↺ restart</button>
+</div>
+</div>
+
+<script>
+// ── contacts ──────────────────────────────────────
+const CONTACTS=[
+  {key:'zuri', name:'Zuri 💜', av:'https://randomuser.me/api/portraits/women/37.jpg',  prev:'are you serious right now',      time:'now', unread:true},
+  {key:'jay',  name:'Jay',     av:'https://randomuser.me/api/portraits/men/32.jpg',    prev:'where you at tho 👀',            time:'2m',  unread:true},
+  {key:'malik',name:'Malik',   av:'https://randomuser.me/api/portraits/men/54.jpg',    prev:'yesterday was different fr',     time:'8m',  unread:true},
+  {key:'trey', name:'Trey',    av:'https://randomuser.me/api/portraits/men/22.jpg',    prev:'beach this weekend say less 🏖', time:'15m', unread:true},
+  {key:'d',    name:'D',       av:'https://randomuser.me/api/portraits/men/41.jpg',    prev:'you really left me on read 😒',  time:'1h',  unread:true},
+  {key:'num',  name:'',        av:null,                                                 prev:'you coming or not',              time:'2h',  unread:true},
+  {key:'mum',  name:'Mum',     av:'https://randomuser.me/api/portraits/women/65.jpg',  prev:'I tried. I really tried',        time:'3h',  unread:false, dim:true},
+];
+
+// ── timers ────────────────────────────────────────
+const TQ=[];
+function t(fn,ms){TQ.push(setTimeout(fn,ms));}
+function clearAll(){TQ.forEach(clearTimeout);TQ.length=0;}
+
+function show(n){
+  document.querySelectorAll('.sc').forEach(s=>s.classList.remove('on'));
+  document.getElementById('s'+n).classList.add('on');
+}
+
+// ── bubble / typing helpers ───────────────────────
+function mkB(txt,type,hist){
+  const row=document.createElement('div');
+  row.className='br'+(type==='s'?' s':'');
+  const b=document.createElement('div');
+  b.className='b '+(type==='s'?'s':'r')+(hist?' hist':'');
+  b.textContent=txt;row.appendChild(b);
+  return{row,b};
+}
+function mkT(){
+  const row=document.createElement('div');row.className='br';
+  const d=document.createElement('div');d.className='ty';
+  d.innerHTML='<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+  row.appendChild(d);return{row,d};
+}
+function divider(label){
+  const d=document.createElement('div');d.className='div-line';d.textContent=label;return d;
+}
+const on=el=>el.classList.add('v');
+const off=el=>el.classList.remove('v');
+
+// ── history helper ────────────────────────────────
+// pairs: [text, 'r'|'s']
+function addHistory(area, pairs){
+  area.appendChild(divider('Yesterday'));
+  pairs.forEach(([txt,type])=>{
+    const{row}=mkB(txt,type,true);
+    area.appendChild(row);
+  });
+  area.appendChild(divider('Today'));
+}
+
+// ── inbox row builder ─────────────────────────────
+function mkIRow(d,instant){
+  const row=document.createElement('div');
+  row.className='irow'+(d.dim?' dim':'')+(instant?' v':'');
+  if(d.key)row.dataset.key=d.key;
+  if(d.av){
+    const img=document.createElement('img');
+    img.className='av';img.src=d.av;img.width=img.height=44;
+    img.onerror=function(){
+      this.style.display='none';
+      const fb=document.createElement('div');fb.className='avfb';
+      fb.style.cssText='width:44px;height:44px;font-size:16px;';
+      fb.textContent=(d.name||'?')[0]||'?';row.insertBefore(fb,row.firstChild);
+    };
+    row.appendChild(img);
+  } else {
+    const fb=document.createElement('div');
+    fb.style.cssText='width:44px;height:44px;border-radius:50%;background:#2a2a2a;display:flex;align-items:center;justify-content:center;font-size:20px;color:#888;flex-shrink:0;';
+    fb.textContent='?';row.appendChild(fb);
+  }
+  const info=document.createElement('div');info.className='iin';
+  info.innerHTML=`<div class="iname">${d.name||'Unknown number'}</div><div class="iprev">${d.prev}</div>`;
+  row.appendChild(info);
+  const meta=document.createElement('div');meta.className='imet';
+  meta.innerHTML=`<div class="itime">${d.time}</div>`;
+  if(d.unread)meta.innerHTML+='<div class="udot"></div>';
+  row.appendChild(meta);
+  return row;
+}
+
+// ── build tap layer once ──────────────────────────
+function buildTapLayer(){
+  const box=document.getElementById('taprows');
+  CONTACTS.forEach(d=>box.appendChild(mkIRow(d,true)));
+}
+
+// ── tap open — 1500ms, highlight at 300ms ─────────
+function tapOpen(key,cb){
+  const layer=document.getElementById('taplayer');
+  layer.querySelectorAll('.tapping').forEach(r=>r.classList.remove('tapping'));
+  layer.style.display='flex';
+  t(()=>{
+    const el=layer.querySelector('[data-key="'+key+'"]');
+    if(el)el.classList.add('tapping');
+  },300);
+  t(()=>{layer.style.display='none';cb();},1500);
+}
+
+// ── S2: Mum — with history ────────────────────────
+function s2(){
+  const a=document.getElementById('s2m');a.innerHTML='';
+  addHistory(a,[
+    ['Did you eat today?','r'],
+    ['yes mum 😊','s'],
+    ['okay. how are your studies?','r'],
+    ['going okay, exams next week','s'],
+    ['work hard okay, I love you','r'],
+    ['love you too mum ❤️','s'],
+  ]);
+  const m1=mkB('school is over, come home','r');a.appendChild(m1.row);
+  t(()=>on(m1.b),400);
+  const m2=mkB('Mum I still want to stay','s');a.appendChild(m2.row);
+  t(()=>on(m2.b),1500);
+  const t1=mkT();a.appendChild(t1.row);
+  t(()=>on(t1.d),2500);
+  const m3=mkB('then pay your own rent','r');a.appendChild(m3.row);
+  t(()=>{off(t1.d);on(m3.b);},3400);
+  const t2=mkT();a.appendChild(t2.row);
+  t(()=>on(t2.d),4300);
+  const m4=mkB('I cannot keep doing this','r');a.appendChild(m4.row);
+  t(()=>{off(t2.d);on(m4.b);},5200);
+}
+
+// ── S3: Zuri — with history ───────────────────────
+function s3(){
+  const a=document.getElementById('s3m');a.innerHTML='';
+  addHistory(a,[
+    ['girl you been so quiet lately','r'],
+    ['I know I know... a lot going on','s'],
+    ['you good??','r'],
+    ['not really','s'],
+    ['talk to me sis, what is it 💜','r'],
+  ]);
+  const m1=mkB('I am pregnant','s');a.appendChild(m1.row);
+  t(()=>on(m1.b),400);
+  // photo
+  const ir=document.createElement('div');ir.className='br s';
+  const iw=document.createElement('div');
+  iw.style.cssText='align-self:flex-end;opacity:0;transform:scale(.85);transition:opacity .2s,transform .2s;border-radius:14px;overflow:hidden;';
+  const img=document.createElement('img');
+  img.src='pregnancy-test.jpg';img.style.cssText='max-width:180px;display:block;border-radius:14px;';
+  img.onerror=function(){
+    iw.innerHTML='';
+    const pt=document.createElement('div');pt.className='pt';
+    pt.innerHTML='<div class="pts"></div><div class="ptw"><div class="ptl"></div><div class="ptl"></div></div>';
+    iw.appendChild(pt);
+  };
+  iw.appendChild(img);ir.appendChild(iw);a.appendChild(ir);
+  t(()=>{iw.style.opacity='1';iw.style.transform='scale(1)';},1100);
+  const t1=mkT();a.appendChild(t1.row);
+  t(()=>on(t1.d),2300);
+  const m2=mkB('what','r');a.appendChild(m2.row);
+  t(()=>{off(t1.d);on(m2.b);},4400);
+  const t2=mkT();a.appendChild(t2.row);
+  t(()=>on(t2.d),5100);
+  const m3=mkB('are you serious right now','r');a.appendChild(m3.row);
+  t(()=>{off(t2.d);on(m3.b);},6100);
+}
+
+// ── S4: Inbox ─────────────────────────────────────
+function s4(){
+  const box=document.getElementById('s4box');box.innerHTML='';
+  document.getElementById('s4n').classList.remove('v');
+  let mumRow=null;
+  CONTACTS.forEach((d,i)=>{
+    const row=mkIRow(d,false);
+    box.appendChild(row);
+    if(d.key==='mum')mumRow=row;
+    t(()=>row.classList.add('v'),300+i*420);
+  });
+  t(()=>document.getElementById('s4n').classList.add('v'),4200);
+  t(()=>{if(mumRow)mumRow.classList.add('tap');},5600);
+}
+
+// ── S5: Mum "I tried" — with history ─────────────
+function s5(){
+  const a=document.getElementById('s5m');a.innerHTML='';
+  addHistory(a,[
+    ['Mum please','s'],
+    ['Amara I already told you','r'],
+    ['I have nowhere to go','s'],
+    ['you are an adult now','r'],
+    ['Mum please answer me','s'],
+  ]);
+  const m1=mkB('Amara','r');a.appendChild(m1.row);
+  t(()=>on(m1.b),500);
+  const t1=mkT();a.appendChild(t1.row);
+  t(()=>on(t1.d),1400);
+  const m2=mkB('I am so sorry baby','r');a.appendChild(m2.row);
+  t(()=>{off(t1.d);on(m2.b);},2200);
+  const t2=mkT();a.appendChild(t2.row);
+  t(()=>on(t2.d),3100);
+  const m3=mkB('I tried','r');a.appendChild(m3.row);
+  t(()=>{off(t2.d);on(m3.b);},3800);
+  const t3=mkT();a.appendChild(t3.row);
+  t(()=>on(t3.d),4500);
+  const m4=mkB('I really tried','r');a.appendChild(m4.row);
+  t(()=>{off(t3.d);on(m4.b);},5200);
+}
+
+// ── S6: Mr. K ─────────────────────────────────────
+function s6(){
+  const a=document.getElementById('s6m');a.innerHTML='';
+  const at=document.getElementById('s6at');at.style.display='none';
+  const m1=mkB('I heard you are looking for work','r');a.appendChild(m1.row);
+  t(()=>on(m1.b),300);
+  const t1=mkT();a.appendChild(t1.row);
+  t(()=>on(t1.d),1100);
+  const m2=mkB('come to my place, we can discuss','r');a.appendChild(m2.row);
+  t(()=>{off(t1.d);on(m2.b);},1900);
+  const t2=mkT();a.appendChild(t2.row);
+  t(()=>on(t2.d),2800);
+  const m3=mkB('I like your body by the way 😏','r');a.appendChild(m3.row);
+  t(()=>{off(t2.d);on(m3.b);},3800);
+  t(()=>at.style.display='block',4100);
+  t(()=>at.style.display='none', 5200);
+}
+
+// ── ending ────────────────────────────────────────
+function doFade(){
+  const fog=document.getElementById('fog');
+  fog.style.transition='opacity 1s ease';
+  fog.classList.add('dark');
+  t(()=>on(document.getElementById('el1')),1000);
+  t(()=>on(document.getElementById('el2')),1700);
+  t(()=>on(document.getElementById('rbtn')),3800);
+}
+function resetEnd(){
+  const fog=document.getElementById('fog');
+  fog.style.transition='none';fog.classList.remove('dark');
+  ['el1','el2'].forEach(id=>document.getElementById(id).classList.remove('v'));
+  document.getElementById('rbtn').classList.remove('v');
+}
+
+// ── MAIN TIMELINE ──────────────────────────────────
+// S1:            0ms  →  3000ms  (3s)
+// tap Mum:    3000ms  (1500ms shown)
+// S2:         4500ms  →  11000ms (6.5s)
+// tap Zuri:  11000ms  (1500ms)
+// S3:        12500ms  →  20000ms (7.5s)
+// S4:        20000ms  →  26500ms (6.5s, mum tap +5600ms)
+// S5:        26500ms  →  33000ms (6.5s)
+// tap MrK:   33000ms  (1500ms)
+// S6:        34500ms  content ends +5200ms = 39700ms
+// hold 1s →  40700ms: fade
+function play(){
+  clearAll();resetEnd();
+  show(1);
+
+  t(()=>tapOpen('mum',()=>{show(2);s2();}),          3000);
+  t(()=>tapOpen('zuri',()=>{show(3);s3();}),         11000);
+  t(()=>{show(4);s4();},                             20000);
+  t(()=>{show(5);s5();},                             26500);
+  t(()=>tapOpen('mrk',()=>{show(6);s6();}),          33000);
+
+  // S6 Amara typing disappears at 34500+5200=39700ms, hold 1s
+  t(()=>doFade(),                                    40700);
+}
+
+function restart(){play();}
+buildTapLayer();
+play();
+</script>
+</body>
+</html>

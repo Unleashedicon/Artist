@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Young Roddo — Thumbnail</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #111;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    gap: 24px;
+    font-family: -apple-system, sans-serif;
+    padding: 40px 20px;
+  }
+
+  .hint {
+    color: #888;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    text-align: center;
+  }
+
+  /* ── THUMBNAIL ── */
+  .thumb {
+    width: 405px;   /* 1080px at 0.375× — screenshot at browser zoom 100% */
+    height: 720px;  /* 1920px at 0.375× */
+    position: relative;
+    overflow: hidden;
+    background: #08060e;
+    box-shadow: 0 40px 120px rgba(0,0,0,0.9);
+    flex-shrink: 0;
+  }
+
+  /* Background gradient layers */
+  .bg-base {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%,   rgba(200,140,10,0.18) 0%, transparent 65%),
+      radial-gradient(ellipse 60% 50% at 10% 80%,  rgba(180,40,20,0.12)  0%, transparent 60%),
+      linear-gradient(160deg, #0e0b1a 0%, #1a0c0c 45%, #080d14 100%);
+  }
+
+  /* Gold top light bleed */
+  .light-top {
+    position: absolute;
+    top: -80px; left: 50%;
+    transform: translateX(-50%);
+    width: 340px; height: 260px;
+    background: radial-gradient(ellipse, rgba(220,160,20,0.22) 0%, transparent 70%);
+  }
+
+  /* Film grain */
+  .grain {
+    position: absolute; inset: -20%;
+    width: 140%; height: 140%;
+    opacity: 0.09;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+    animation: grain 1.2s steps(3) infinite;
+  }
+  @keyframes grain {
+    0%   { transform: translate(0,0); }
+    33%  { transform: translate(-5%, 4%); }
+    66%  { transform: translate(4%,-5%); }
+    100% { transform: translate(0,0); }
+  }
+
+  /* Vignette */
+  .vignette {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 90% 90% at 50% 50%, transparent 40%, rgba(0,0,0,0.75) 100%);
+  }
+
+  /* ── TOP LABEL ── */
+  .top-label {
+    position: absolute;
+    top: 36px; left: 36px; right: 36px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .ngoma-tag {
+    font-size: 9px; font-weight: 800;
+    letter-spacing: 0.38em; text-transform: uppercase;
+    color: #E8B04B;
+    border: 1px solid rgba(232,176,75,0.4);
+    padding: 4px 10px; border-radius: 3px;
+  }
+  .lyric-video-tag {
+    font-size: 9px; font-weight: 700;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+  }
+
+  /* ── PHONE ICON CENTER ── */
+  .phone-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -58%);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .ring-outer {
+    width: 130px; height: 130px; border-radius: 50%;
+    border: 1.5px solid rgba(232,176,75,0.25);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 60px rgba(200,140,10,0.18);
+  }
+  .ring-inner {
+    width: 96px; height: 96px; border-radius: 50%;
+    border: 1.5px solid rgba(232,176,75,0.45);
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(232,176,75,0.06);
+  }
+  .phone-emoji {
+    font-size: 42px;
+    filter: drop-shadow(0 4px 16px rgba(200,140,10,0.6));
+    transform: rotate(-10deg);
+  }
+
+  /* ── WAVEFORM ── */
+  .waveform {
+    display: flex; gap: 5px; align-items: center; justify-content: center;
+    height: 32px;
+  }
+  .bar {
+    width: 4px; border-radius: 2px;
+    background: linear-gradient(180deg, #E8B04B, #C8780A);
+    animation: wave 0.7s ease-in-out infinite alternate;
+  }
+  .bar:nth-child(1) { height: 10px; animation-delay: 0s;    }
+  .bar:nth-child(2) { height: 22px; animation-delay: 0.1s;  }
+  .bar:nth-child(3) { height: 30px; animation-delay: 0.05s; }
+  .bar:nth-child(4) { height: 18px; animation-delay: 0.15s; }
+  .bar:nth-child(5) { height: 28px; animation-delay: 0.07s; }
+  .bar:nth-child(6) { height: 14px; animation-delay: 0.12s; }
+  .bar:nth-child(7) { height: 24px; animation-delay: 0.03s; }
+  @keyframes wave {
+    from { transform: scaleY(0.45); opacity: 0.6; }
+    to   { transform: scaleY(1);    opacity: 1;   }
+  }
+
+  /* ── ARTIST NAME ── */
+  .name-block {
+    position: absolute;
+    bottom: 200px; left: 36px; right: 36px;
+  }
+  .young-text {
+    font-size: 20px; font-weight: 700;
+    letter-spacing: 0.5em; text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    display: block; margin-bottom: 4px;
+  }
+  .roddo-text {
+    font-size: 92px; font-weight: 900; line-height: 0.88;
+    letter-spacing: -3px;
+    color: #fff;
+    text-shadow: 0 0 80px rgba(232,176,75,0.35), 0 4px 30px rgba(0,0,0,0.9);
+    display: block;
+  }
+  .gold-line {
+    width: 48px; height: 2.5px;
+    background: linear-gradient(90deg, #E8B04B, transparent);
+    margin-top: 14px; border-radius: 2px;
+  }
+
+  /* ── LYRIC STRIP ── */
+  .lyric-strip {
+    position: absolute;
+    bottom: 70px; left: 0; right: 0;
+    padding: 0 36px;
+    border-left: 3px solid #E8B04B;
+    margin-left: 36px;
+  }
+  .lyric-line {
+    font-size: 14px; font-weight: 700; line-height: 1.5;
+    color: rgba(255,255,255,0.72);
+    letter-spacing: 0.02em;
+    font-style: italic;
+  }
+  .lyric-line span { color: #E8B04B; }
+
+  /* ── DOWNLOAD BUTTON ── */
+  .dl-btn {
+    background: #E8B04B; color: #0a0810;
+    border: none; padding: 12px 32px;
+    font-size: 14px; font-weight: 800;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    border-radius: 6px; cursor: pointer;
+  }
+  .dl-btn:hover { background: #d4a040; }
+</style>
+</head>
+<body>
+
+<p class="hint">Right-click the thumbnail → "Save image as" to download, or screenshot it.<br>
+For full 1080×1920 quality, zoom browser to 267% then screenshot.</p>
+
+<!-- ── THUMBNAIL ── -->
+<div class="thumb" id="thumb">
+  <div class="bg-base"></div>
+  <div class="light-top"></div>
+  <div class="grain"></div>
+  <div class="vignette"></div>
+
+  <!-- Top labels -->
+  <div class="top-label">
+    <div class="ngoma-tag">Ngoma Charts</div>
+    <div class="lyric-video-tag">Lyric Video</div>
+  </div>
+
+  <!-- Center phone + waveform -->
+  <div class="phone-ring">
+    <div class="ring-outer">
+      <div class="ring-inner">
+        <span class="phone-emoji">📞</span>
+      </div>
+    </div>
+    <div class="waveform">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+  </div>
+
+  <!-- Artist name -->
+  <div class="name-block">
+    <span class="young-text">Young</span>
+    <span class="roddo-text">RODDO</span>
+    <div class="gold-line"></div>
+  </div>
+
+  <!-- Lyric strip -->
+  <div class="lyric-strip">
+    <div class="lyric-line">"She call my phone, I don't pick up</div>
+    <div class="lyric-line">I call her phone, <span>her mom pick up"</span></div>
+  </div>
+</div>
+
+</body>
+</html>
