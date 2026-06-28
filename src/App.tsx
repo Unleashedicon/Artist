@@ -238,16 +238,29 @@ function Subscribe({ replay }: { replay: () => void }) {
   </div>
 }
 
+function NameTag({ name, color, x, y, delay }: { name: string; color: string; x: string; y: string; delay: number }) {
+  return (
+    <motion.div className="nameTag" style={{ left: x, top: y }} initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay }}>
+      <span style={{ background: color }}>{name}</span>
+      <i style={{ borderTopColor: color }} />
+    </motion.div>
+  )
+}
+
 function Intro({ next }: { next: () => void }) {
   const [show, setShow] = useState(false)
-  useEffect(() => { const t = setTimeout(() => setShow(true), 1600); return () => clearTimeout(t) }, [])
+  useEffect(() => { const t = setTimeout(() => setShow(true), 2400); return () => clearTimeout(t) }, [])
   return (
     <div className="scene intro" onClick={show ? next : undefined}>
-      <div className="introGlow" />
-      <motion.div className="introBadge" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3 }}>
+      <img className="introBg" src={`${A}intro-hallway.png`} alt="" />
+      <div className="introShade" />
+      <NameTag name="KAISHA" color="#888" x="12%" y="28%" delay={0.5} />
+      <NameTag name="CHLOE" color="#d778b0" x="36%" y="24%" delay={0.9} />
+      <NameTag name="RODDO" color="#C8960E" x="60%" y="18%" delay={1.3} />
+      <motion.div className="introBadge" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 1.8 }}>
         PART 3
       </motion.div>
-      <motion.p className="introHook" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }}>
+      <motion.p className="introHook" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 2.1 }}>
         she's still texting.<br />he's not replying anymore.
       </motion.p>
       {show && <motion.small className="introTap" initial={{ opacity: 0 }} animate={{ opacity: 0.5 }}>tap to start</motion.small>}
