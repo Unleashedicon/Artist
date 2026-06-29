@@ -29,10 +29,60 @@
 /* Future vision — adaptive to phone height */
 .future{padding:0;background:#0d0b0e}.futureHero{position:absolute;inset:0 0 auto;height:min(430px,52%);overflow:hidden}.futureHero>img{width:100%;height:100%;object-fit:cover;object-position:center 26%}.futureFade{position:absolute;inset:0;background:linear-gradient(180deg,#0003 0%,transparent 42%,#0d0b0e 96%)}.futureStamp{position:absolute;left:22px;bottom:30px;background:#f3eee7;color:#151114;padding:10px 14px 11px;box-shadow:0 12px 35px #0008}.futureStamp small{display:block;font-size:7px;letter-spacing:.2em;color:#81526b}.futureStamp b{display:block;font-family:serif;font-style:italic;font-size:21px;margin-top:3px}.futurePlan{position:absolute;top:min(390px,49%);left:22px;right:22px;bottom:21%;padding:22px 20px;background:linear-gradient(145deg,#241a21,#151115);border:1px solid #ffffff0e;border-radius:25px;box-shadow:0 18px 45px #000}.futurePlan>small{font-size:7px;letter-spacing:.22em;color:#c37b9f}.futurePlan h2{font-size:22px;margin:5px 0 13px}.milestones{display:flex;justify-content:space-between;position:relative}.milestones>div{width:31%;text-align:center;position:relative}.milestones i{width:42px;height:42px;border-radius:50%;margin:0 auto 7px;background:#34252f;border:1px solid #6d4a5d;display:grid;place-items:center;color:#eba8c9;font-style:normal;font-size:19px;overflow:hidden}.milestones i img{width:100%;height:100%;object-fit:cover;border-radius:50%}.milestones span b,.milestones span small{display:block}.milestones span b{font-size:9px;line-height:1.25}.milestones span small{font-size:6px;letter-spacing:.12em;color:#8d7c85;margin-top:4px}.milestones em{position:absolute;top:21px;left:83%;width:40%;border-top:1px dashed #80596d}.future .lyric{bottom:18%}
 
+/* ──── Fame scenes ──── */
+.fameScene,.bookScene,.flashSplit{cursor:pointer}
+.fameBg{position:absolute;inset:-6%;width:112%;height:112%;object-fit:cover;object-position:center 20%;animation:fameKen 24s ease-out both}
+@keyframes fameKen{0%{transform:scale(1.04) translateX(-4px)}50%{transform:scale(1.12) translateX(5px)}100%{transform:scale(1.15) translateX(-2px)}}
+.fameShade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.45) 0%,transparent 30%,rgba(0,0,0,.15) 55%,rgba(0,0,0,.92) 100%)}
+.fameGrain{position:absolute;inset:-20%;pointer-events:none;mix-blend-mode:overlay;opacity:.06;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:gr 1.1s steps(3) infinite}
+@keyframes gr{0%{transform:translate(0,0)}40%{transform:translate(4%,-6%)}80%{transform:translate(-4%,5%)}100%{transform:translate(0,0)}}
+.fameLyric{position:absolute;left:20px;right:20px;bottom:22%;text-align:center;z-index:10}
+.fameLyricInner{display:inline-block;background:rgba(9,8,11,.75);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:14px 20px;backdrop-filter:blur(14px)}
+.fameLyric small{display:block;font-size:8px;letter-spacing:.24em;color:#c5a3ba;font-weight:700;margin-bottom:4px}
+.fameLyric p{font-size:16px;font-weight:600;line-height:1.4}
+.fameWave{height:16px;display:flex;align-items:center;gap:3px;float:right}.fameWave i{display:block;width:2px;height:5px;background:#db73af;border-radius:9px;animation:wv .7s ease-in-out infinite alternate}
+@keyframes wv{to{height:16px;background:#fff}}
+.fameTap{position:absolute;bottom:30px;left:0;right:0;text-align:center;font-size:10px;letter-spacing:.25em;font-weight:700;opacity:.55;z-index:20;animation:tap 1.8s infinite}
+
+/* Concert poster page — Rush Night inspired */
+.posterScene{background:#08040e}
+.posterOverlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,4,14,.55) 0%,rgba(8,4,14,.25) 20%,rgba(8,4,14,.7) 55%,rgba(8,4,14,.97) 80%)}
+.posterNeon{position:absolute;top:8%;left:50%;transform:translateX(-50%);width:280px;height:320px;border:2px solid rgba(230,150,20,.35);border-radius:6px;transform:translateX(-50%) rotate(2deg);box-shadow:0 0 40px rgba(230,150,20,.15),inset 0 0 40px rgba(230,150,20,.08)}
+.posterHook{position:absolute;z-index:5;top:48px;left:16px;right:16px;text-align:center;background:rgba(6,3,14,.7);border:1px solid rgba(230,150,20,.2);border-radius:18px;padding:20px 18px 22px;backdrop-filter:blur(16px)}
+.posterPt4{display:inline-block;border:2px solid rgba(230,150,20,.55);border-radius:5px;padding:6px 20px;font-size:13px;letter-spacing:.5em;font-weight:900;color:#e69614;margin-bottom:14px;text-shadow:0 0 18px rgba(230,150,20,.4)}
+.posterHook p{font-size:17px;font-weight:700;line-height:1.45;color:#fff}
+.posterDate{position:absolute;z-index:5;top:140px;left:28px;display:flex;flex-direction:column;align-items:center}
+.posterDate span{font-size:11px;letter-spacing:.3em;color:#e6961488;font-weight:700}
+.posterDate b{font-size:54px;font-weight:900;color:#e69614;line-height:1;text-shadow:0 0 30px rgba(230,150,20,.4)}
+.posterDateLine{width:30px;height:1px;background:#e69614;margin:6px 0}
+.posterDate small{font-size:8px;letter-spacing:.2em;color:rgba(255,255,255,.4)}
+.posterName{position:absolute;z-index:5;bottom:36%;left:0;right:0;text-align:center}
+.posterName h1{font-size:72px;font-weight:900;letter-spacing:-.04em;line-height:.85;color:#e69614;text-shadow:0 4px 40px rgba(230,150,20,.3);-webkit-text-stroke:1px rgba(230,150,20,.6)}
+.posterName em{font-size:42px;font-style:italic;font-weight:300;color:#fff;display:block;margin-top:-6px;font-family:Georgia,serif}
+.posterTags{position:absolute;z-index:5;bottom:30%;left:0;right:0;display:flex;justify-content:center;align-items:center;gap:10px}
+.posterTags span{font-size:9px;letter-spacing:.15em;color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.2);padding:4px 10px}
+.posterTags i{font-style:normal;color:#e69614;font-size:10px}
+.posterBottom{position:absolute;z-index:5;bottom:14%;left:22px;right:22px;text-align:center}
+.posterVenue{font-size:10px;letter-spacing:.25em;color:rgba(255,255,255,.45);margin-bottom:10px}
+.posterCapacity b{font-size:22px;font-weight:900;color:#e69614}.posterCapacity span{font-size:11px;color:#666}
+.posterPrice{font-size:11px;color:#888;margin-top:4px}
+.posterStamp{position:absolute;z-index:6;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-18deg);font-size:36px;font-weight:900;letter-spacing:.12em;color:rgba(255,59,48,.65);border:4px solid rgba(255,59,48,.45);border-radius:10px;padding:6px 20px;pointer-events:none}
+
+/* Flashback split */
+.flashSplit{background:#0b090c}.flashLabel{position:absolute;top:50px;left:20px;right:20px;text-align:center;z-index:5}
+.flashLabel small{font-size:8px;letter-spacing:.3em;color:#e69614}.flashLabel h2{font-size:18px;margin-top:6px;font-weight:700;line-height:1.3}
+.flashPanels{position:absolute;inset:100px 0 170px;display:flex;gap:2px}
+.flashPanels>div{flex:1;position:relative;overflow:hidden}
+.flashPanels img{width:100%;height:100%;object-fit:cover}
+.flashPanels>div::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(5,5,6,.9))}
+.flashPanels span{position:absolute;z-index:2;bottom:38px;left:10px;right:10px;font-size:7px;letter-spacing:.14em;text-transform:uppercase}
+.flashPanels b{position:absolute;z-index:2;bottom:20px;left:10px;font-size:10px;color:#c4b9bf}
+.flashThen{filter:sepia(.3) brightness(.75)}
+
 /* Intro hook card */
 .intro{background:#06040a;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 32px;cursor:pointer}.introBg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 15%}.introShade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,4,10,.15) 0%,rgba(6,4,10,.1) 35%,rgba(6,4,10,.7) 65%,rgba(6,4,10,.95) 85%)}
 .nameTag{position:absolute;z-index:5;display:flex;flex-direction:column;align-items:center}.nameTag span{display:block;padding:4px 10px;border-radius:3px;font-size:10px;font-weight:800;letter-spacing:.15em;color:#fff}.nameTag i{width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid;font-style:normal;margin-top:-1px}
-.introBadge{position:relative;z-index:4;border:1px solid rgba(215,120,176,.4);border-radius:4px;padding:5px 16px;font-size:9px;letter-spacing:.45em;font-weight:800;color:#d778b0;margin-bottom:20px}.introHook{position:relative;z-index:4;text-align:center;font-size:21px;font-weight:700;line-height:1.45;color:#f0ece8;letter-spacing:-.02em;text-shadow:0 2px 20px #000}.introTap{position:relative;z-index:4;display:block;margin-top:30px;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:#fff;animation:tap 1.8s infinite}
+.introBadge{position:relative;z-index:4;border:2px solid rgba(230,150,20,.5);border-radius:5px;padding:8px 22px;font-size:13px;letter-spacing:.5em;font-weight:900;color:#e69614;margin-bottom:24px;text-shadow:0 0 20px rgba(230,150,20,.4)}.introHook{position:relative;z-index:4;text-align:center;font-size:26px;font-weight:800;line-height:1.4;color:#fff;letter-spacing:-.02em;text-shadow:0 2px 30px #000,0 0 60px rgba(0,0,0,.8)}.introTap{position:relative;z-index:4;display:block;margin-top:30px;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:#fff;animation:tap 1.8s infinite}
 
 /* Subscribe / Like ending */
 .subscribe{background:#08060a;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 28px}.subGlow{position:absolute;width:280px;height:280px;border-radius:50%;background:#8b3c6e;filter:blur(110px);opacity:.18;top:50%;left:50%;transform:translate(-50%,-50%)}.subNotif{position:absolute;top:48px;left:14px;right:14px;height:74px;border-radius:20px;background:rgba(239,234,238,.88);backdrop-filter:blur(20px);color:#141114;padding:12px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 10px 30px #0004}.subNotif>i{width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,#d0a226,#c87a0a);display:grid;place-items:center;font-style:normal;font-size:19px}.subNotif div{flex:1}.subNotif b{display:block;font-size:8px;letter-spacing:.12em;color:#666}.subNotif p{font-size:12px;margin-top:2px;color:#222}.subNotif>small{font-size:9px;color:#888;align-self:flex-start;margin-top:2px}.subCenter{text-align:center}.subCenter>small{font-size:9px;letter-spacing:.38em;color:#ffffff45}.subCenter h1{font-size:52px;font-weight:900;letter-spacing:-.06em;line-height:.95;margin-top:14px;text-shadow:0 0 70px #d778b044}.subLine{width:55px;height:2.5px;background:linear-gradient(90deg,#d778b0,transparent);margin:16px auto 0;border-radius:2px}.subActions{display:flex;flex-direction:column;align-items:center;gap:18px;margin-top:36px}.subBtn{border:0;border-radius:7px;background:#FF0000;color:#fff;padding:13px 30px;font-size:14px;font-weight:800;letter-spacing:.04em;cursor:pointer;animation:subPulse 2s ease-in-out infinite}.subReplay{border:0;background:none;display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.12em;color:#ffffff55;cursor:pointer}.subReplay span{display:grid;place-items:center;width:28px;height:28px;border:1.5px solid #ffffff38;border-radius:50%;font-size:14px}@keyframes subPulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 #ff000055}50%{transform:scale(1.04);box-shadow:0 0 0 10px #ff000000}}

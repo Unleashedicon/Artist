@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const ARTISTS = [
-  { id: 'roddo',  name: 'Rod Wave', tag: 'Florida · Hip-Hop', img: '/story/rod-wave.jpg', fallback: 'RW',  color: '#C8960E', real: true,  tilt: -3 },
+  { id: 'roddo',  name: 'Rema', tag: 'Benin City · Afrobeats', img: '/story/rema.jpg', fallback: 'RE',  color: '#e69614', real: true,  tilt: -3 },
   { id: 'travis', name: 'Travis Scott', tag: 'Houston · Rap',     img: 'https://i.scdn.co/image/ab6761610000517419c2790744c792d05570bb71', fallback: 'TS',  color: '#8844FF', real: false, tilt:  2 },
   { id: 'weeknd', name: 'The Weeknd',   tag: 'Toronto · R&B',     img: 'https://i.scdn.co/image/ab67616100005174c1719ac9e6a75c1c25835018', fallback: 'XO',  color: '#CC2244', real: false, tilt: -2 },
   { id: 'drake',  name: 'Drake',        tag: 'Toronto · Hip-Hop', img: 'https://i.scdn.co/image/ab676161000051744293385d324db8558179afd9', fallback: 'OVO', color: '#2255AA', real: false, tilt:  3 },
@@ -48,7 +48,7 @@ export function ArtistSelect({ onSelect }: Props) {
           <h1 style={{ color: '#F0EDE8', fontSize: 'clamp(1.2rem, 4.5vw, 2rem)', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: 4 }}>
             Choose an Artist
           </h1>
-          <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: 12 }}>Tap Rod Wave to start the story</p>
+          <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: 12 }}>Tap Rema to start the story</p>
         </motion.div>
 
         {/* Polaroid grid */}
