@@ -26,151 +26,207 @@ function PhotoScene({ img, lyric, next, imgPos }: { img: string; lyric: string; 
   )
 }
 
-function BookingPage({ next }: { next: () => void }) {
-  const [count, setCount] = useState(0)
-
-  useEffect(() => {
-    const target = 20000
-    let n = 0
-    const t = setInterval(() => { n += 347; if (n >= target) { n = target; clearInterval(t) }; setCount(n) }, 40)
-    return () => clearInterval(t)
-  }, [])
-
+/* ── Scene 0: Part 5 intro card ── */
+function Pt5Intro({ next }: { next: () => void }) {
+  const [ready, setReady] = useState(false)
+  useEffect(() => { const t = setTimeout(() => setReady(true), 2200); return () => clearTimeout(t) }, [])
   return (
-    <div className="scene posterScene" onClick={next}>
-      <img className="fameBg" src={`${A}stage-back.png`} alt="" style={{ objectPosition: 'center 10%' }} />
-      <div className="posterOverlay" />
-      <div className="posterNeon" />
-
-      {/* Part 4 badge + hook */}
-      <motion.div className="posterHook" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
-        <div className="posterPt4">PART 4</div>
-        <p>20,000 fans screaming his name.<br />but he's never felt more alone.</p>
+    <div className="scene pt5intro" onClick={ready ? next : undefined}>
+      <img className="fameBg" src={`${A}intro-bg.png`} alt="" style={{ objectPosition: 'center 20%' }} />
+      <div className="pt5overlay" />
+      <motion.div className="pt5badge" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+        PART 5
       </motion.div>
-
-      {/* Date block */}
-      <motion.div className="posterDate" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.6 }}>
-        <span>SAT</span>
-        <b>18</b>
-        <span>JUL</span>
-        <div className="posterDateLine" />
-        <small>DOORS 7PM</small>
+      <motion.div className="pt5title" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}>
+        BETTER DAYS
       </motion.div>
-
-      {/* Big name */}
-      <motion.div className="posterName" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.7 }}>
-        <h1>RODDO</h1>
-        <em>Live</em>
-      </motion.div>
-
-      {/* Genre tags */}
-      <motion.div className="posterTags" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }}>
-        <span>HIP-HOP</span><i>+</i><span>R&B</span><i>+</i><span>AFROBEATS</span>
-      </motion.div>
-
-      {/* Bottom info */}
-      <motion.div className="posterBottom" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1 }}>
-        <div className="posterVenue">THE FORUM, LOS ANGELES</div>
-        <div className="posterCapacity">
-          <b>{count.toLocaleString()}</b><span> / 20,000</span>
-        </div>
-        <div className="posterPrice">$85 — $250</div>
-      </motion.div>
-
-      {/* Sold out stamp */}
-      <motion.div className="posterStamp" initial={{ opacity: 0, scale: 1.3, rotate: -22 }} animate={{ opacity: 1, scale: 1, rotate: -18 }} transition={{ delay: 1.2, type: 'spring' }}>
-        SOLD OUT
-      </motion.div>
-
-      <div className="fameTap">TAP TO CONTINUE {'›'}</div>
-    </div>
-  )
-}
-
-function FlashbackSplit({ next }: { next: () => void }) {
-  return (
-    <div className="scene flashSplit" onClick={next}>
-      <div className="flashLabel">
-        <motion.small initial={{ opacity: 0 }} animate={{ opacity: 1 }}>THEN vs NOW</motion.small>
-        <motion.h2 initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>she only called after<br />the check cleared.</motion.h2>
-      </div>
-      <div className="flashPanels">
-        <motion.div className="flashThen" initial={{ x: -60 }} animate={{ x: 0 }}>
-          <img src={`${A}rejection.png`} alt="" />
-          <span>BEFORE THE FAME</span>
-          <b>she said no</b>
-        </motion.div>
-        <motion.div initial={{ x: 60 }} animate={{ x: 0 }}>
-          <img src={`${A}after-fame.png`} alt="" />
-          <span>AFTER THE FAME</span>
-          <b>now she calling</b>
-        </motion.div>
-      </div>
-      <LyricPill lines={`"Girl you told me no because I wasn't getting paid"`} />
-      <div className="fameTap">TAP TO CONTINUE {'›'}</div>
-    </div>
-  )
-}
-
-function Subscribe({ replay }: { replay: () => void }) {
-  return <div className="scene subscribe">
-    <div className="subGlow"/>
-    <motion.div className="subNotif" initial={{y:-90,opacity:0}} animate={{y:0,opacity:1}} transition={{delay:.3,type:'spring',stiffness:180}}>
-      <i>🎵</i><div><b>NGOMA CHARTS</b><p>new story dropping soon 🔥</p></div><small>now</small>
-    </motion.div>
-    <motion.div className="subCenter" initial={{opacity:0,y:24}} animate={{opacity:1,y:0}} transition={{delay:.6}}>
-      <small>FOR THE NEXT CHAPTER</small>
-      <h1>LIKE &<br/>SUBSCRIBE</h1>
-      <div className="subLine"/>
-    </motion.div>
-    <motion.div className="subActions" initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:.9}}>
-      <button className="subBtn">▶ SUBSCRIBE</button>
-      <button className="subReplay" onClick={replay}><span>↻</span> REPLAY STORY</button>
-    </motion.div>
-  </div>
-}
-
-function NameTag({ name, color, x, y, delay }: { name: string; color: string; x: string; y: string; delay: number }) {
-  return (
-    <motion.div className="nameTag" style={{ left: x, top: y }} initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay }}>
-      <span style={{ background: color }}>{name}</span>
-      <i style={{ borderTopColor: color }} />
-    </motion.div>
-  )
-}
-
-function Intro({ next }: { next: () => void }) {
-  const [show, setShow] = useState(false)
-  useEffect(() => { const t = setTimeout(() => setShow(true), 2400); return () => clearTimeout(t) }, [])
-  return (
-    <div className="scene intro" onClick={show ? next : undefined}>
-      <img className="introBg" src={`${A}intro-hallway.png`} alt="" />
-      <div className="introShade" />
-      <NameTag name="KAISHA" color="#888" x="12%" y="28%" delay={0.5} />
-      <NameTag name="CHLOE" color="#d778b0" x="36%" y="24%" delay={0.9} />
-      <NameTag name="RODDO" color="#C8960E" x="60%" y="18%" delay={1.3} />
-      <motion.div className="introBadge" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 1.8 }}>
-        PART 4
-      </motion.div>
-      <motion.p className="introHook" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 2.1 }}>
-        20,000 fans screaming his name.<br />but he's never felt more alone.
+      <motion.p className="pt5hook" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.1 }}>
+        some connections<br />change everything.
       </motion.p>
-      {show && <motion.small className="introTap" initial={{ opacity: 0 }} animate={{ opacity: 0.5 }}>tap to start</motion.small>}
+      <motion.small className="pt5credit" initial={{ opacity: 0 }} animate={{ opacity: 0.7 }} transition={{ delay: 1.5 }}>
+        POLO G · BETTER DAYS
+      </motion.small>
+      {ready && (
+        <motion.small className="introTap" initial={{ opacity: 0 }} animate={{ opacity: 0.5 }}>
+          tap to start
+        </motion.small>
+      )}
+    </div>
+  )
+}
+
+/* ── Scene 2: Bulb lamp reveal ── */
+function BulbSVG({ on }: { on: boolean }) {
+  return (
+    <svg width="30" height="44" viewBox="0 0 30 44" fill="none">
+      <rect x="10" y="34" width="10" height="7" rx="2" fill="#3a3a3a" />
+      <line x1="10" y1="36.5" x2="20" y2="36.5" stroke="#555" strokeWidth="1" />
+      <line x1="10" y1="39" x2="20" y2="39" stroke="#555" strokeWidth="1" />
+      <path
+        d="M4 15Q4 2 15 2Q26 2 26 15Q26 26 21 33L9 33Q4 26 4 15Z"
+        fill={on ? '#FFE080' : '#1c1c1c'}
+        style={{ filter: on ? 'drop-shadow(0 0 10px #FFB347aa)' : 'none', transition: 'fill 0.3s, filter 0.3s' }}
+      />
+      {on && (
+        <path d="M11 27L13 20L15 24L17 18L19 22"
+          stroke="#fff" strokeWidth="1.4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      )}
+    </svg>
+  )
+}
+
+function BulbScene({ next }: { next: () => void }) {
+  const [phase, setPhase] = useState<0 | 1 | 2 | 3>(0)
+  useEffect(() => {
+    const ts = [
+      setTimeout(() => setPhase(1), 700),
+      setTimeout(() => setPhase(2), 1350),
+      setTimeout(() => setPhase(3), 2600),
+    ]
+    return () => ts.forEach(clearTimeout)
+  }, [])
+  const isOn = phase >= 2
+  const isRevealed = phase === 3
+  return (
+    <div className="scene bulbScene" onClick={isRevealed ? next : undefined}>
+      <img
+        className="fameBg"
+        src={`${A}studio-entrance.png`}
+        alt=""
+        style={{
+          objectPosition: 'center 20%',
+          clipPath: phase === 3 ? 'circle(200vmax at 50% 10%)'
+            : phase === 2 ? 'circle(28px at 50% 10%)'
+            : 'circle(0px at 50% 10%)',
+          transition: phase === 3 ? 'clip-path 1.5s cubic-bezier(0.2,0,0.4,1)'
+            : phase === 2 ? 'clip-path 0.4s ease-out'
+            : 'none',
+        }}
+      />
+      {isOn && <div className="fameShade" style={{ opacity: isRevealed ? 1 : 0.3, transition: 'opacity 1.2s' }} />}
+      <div className="fameGrain" />
+      <div className={`bulbFixture${phase === 1 ? ' flicker' : ''}${isRevealed ? ' hide' : ''}`}>
+        <BulbSVG on={isOn} />
+        {isOn && <div className="bulbHalo" />}
+      </div>
+      {isRevealed && (
+        <>
+          <LyricPill lines={`"I remember when I joined the club..."`} />
+          <div className="fameTap">TAP TO CONTINUE {'›'}</div>
+        </>
+      )}
+    </div>
+  )
+}
+
+/* ── Scene 4: DM scene ── */
+function DMScene({ next }: { next: () => void }) {
+  const [step, setStep] = useState(0)
+  useEffect(() => {
+    const ts = [
+      setTimeout(() => setStep(1), 900),
+      setTimeout(() => setStep(2), 2700),
+      setTimeout(() => setStep(3), 4100),
+    ]
+    return () => ts.forEach(clearTimeout)
+  }, [])
+  return (
+    <div className="scene dmScene" onClick={step >= 2 ? next : undefined}>
+      <div className="dmHead">
+        <span>‹</span>
+        <div className="dmHeadInfo">
+          <div className="dmAv">PG</div>
+          <b>Polo G</b>
+          <small>Chicago · Drill</small>
+        </div>
+      </div>
+      <div className="dmBody">
+        {step === 1 && (
+          <motion.div className="dmTyping" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
+            <span /><span /><span />
+          </motion.div>
+        )}
+        {step >= 2 && (
+          <motion.div className="dmBubble dmIn" initial={{ opacity: 0, x: -18 }} animate={{ opacity: 1, x: 0 }}>
+            Aye bro, heard your tape.<br />Welcome to the game. 🤝
+          </motion.div>
+        )}
+        {step >= 3 && (
+          <motion.div className="dmBubble dmOut" initial={{ opacity: 0, x: 18 }} animate={{ opacity: 1, x: 0 }}>
+            real ones 💛
+          </motion.div>
+        )}
+      </div>
+      {step >= 2 && <LyricPill lines={`"And then he messaged me straight away"`} />}
+      {step >= 2 && <div className="fameTap">TAP TO CONTINUE {'›'}</div>}
+    </div>
+  )
+}
+
+/* ── Scene 7: Enough Said ── */
+function EnoughSaid({ next }: { next: () => void }) {
+  return (
+    <div className="scene enoughScene" onClick={next}>
+      <motion.div className="enoughText" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4, duration: 0.9 }}>
+        ENOUGH<br />SAID.
+      </motion.div>
+      <motion.div className="enoughLine" initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 1.2, duration: 0.7 }} />
+      <motion.small className="enoughSub" initial={{ opacity: 0 }} animate={{ opacity: 0.38 }} transition={{ delay: 1.8 }}>
+        TAP TO CONTINUE
+      </motion.small>
+    </div>
+  )
+}
+
+/* ── Subscribe ── */
+function Subscribe({ replay }: { replay: () => void }) {
+  return (
+    <div className="scene subscribe">
+      <div className="subGlow" />
+      <motion.div className="subNotif" initial={{ y: -90, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: .3, type: 'spring', stiffness: 180 }}>
+        <i>🎵</i><div><b>NGOMA CHARTS</b><p>new story dropping soon 🔥</p></div><small>now</small>
+      </motion.div>
+      <motion.div className="subCenter" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .6 }}>
+        <small>FOR THE NEXT CHAPTER</small>
+        <h1>LIKE &<br />SUBSCRIBE</h1>
+        <div className="subLine" />
+      </motion.div>
+      <motion.div className="subActions" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .9 }}>
+        <button className="subBtn">▶ SUBSCRIBE</button>
+        <button className="subReplay" onClick={replay}><span>↻</span></button>
+      </motion.div>
     </div>
   )
 }
 
 export default function App() {
-  const [scene,setScene]=useState(0)
-  const next=()=>setScene(s=>Math.min(6,s+1))
-  const pages=[
-    <BookingPage next={next}/>,
-    <ArtistSelect onSelect={next}/>,
-    <PhotoScene img={`${A}backstage.png`} next={next} lyric={`"Shey I think I changed, things don't feel the same"`} />,
-    <PhotoScene img={`${A}stage-back.png`} next={next} imgPos="center 25%" lyric={`"I don't wanna play no games, since I got this fame, it's been so hard to love again"`} />,
-    <PhotoScene img={`${A}kaisha-phone.png`} next={next} imgPos="center 30%" lyric={`"Girl your love is in vain, now you feel the shame"`} />,
-    <FlashbackSplit next={next}/>,
-    <Subscribe replay={()=>setScene(0)}/>,
+  const [scene, setScene] = useState(0)
+  const next = () => setScene(s => Math.min(8, s + 1))
+  const pages = [
+    <Pt5Intro next={next} />,
+    <ArtistSelect onSelect={next} />,
+    <BulbScene next={next} />,
+    <PhotoScene img={`${A}studio-hallway.png`} next={next} imgPos="center 30%"
+      lyric={`"I'm, like, very shy."`} />,
+    <DMScene next={next} />,
+    <PhotoScene img={`${A}studio-bond.png`} next={next} imgPos="center 25%"
+      lyric={`"I think from that moment I just knew that he was going to help me out."`} />,
+    <PhotoScene img={`${A}rooftop-city.png`} next={next} imgPos="center 30%"
+      lyric={`"He's always got an open ear about everything."`} />,
+    <EnoughSaid next={next} />,
+    <Subscribe replay={() => setScene(0)} />,
   ]
-  return <main><div className="phone"><AnimatePresence mode="wait"><motion.div key={scene} className="page" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} transition={{duration:.32}}>{pages[scene]}</motion.div></AnimatePresence></div></main>
+  return (
+    <main>
+      <div className="phone">
+        <AnimatePresence mode="wait">
+          <motion.div key={scene} className="page"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            transition={{ duration: .32 }}>
+            {pages[scene]}
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </main>
+  )
 }
