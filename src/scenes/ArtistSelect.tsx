@@ -89,6 +89,15 @@ export function ArtistSelect({ onSelect }: Props) {
           More artists dropping soon
         </motion.p>
       </div>
+
+      {/* Voiceover lyric — immediate */}
+      <motion.div className="lyric" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0, duration: 0.4 }}>
+        <div className="wave">
+          {[1,2,3,4,5,6,7,8].map(i => <i key={i} style={{ animationDelay: `${i * .09}s` }} />)}
+        </div>
+        <small>RODDO · TALKING</small>
+        <p>you know</p>
+      </motion.div>
     </div>
   )
 }
