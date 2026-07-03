@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArtistSelect } from './scenes/ArtistSelect'
+import { lazy, Suspense } from 'react'
+const StoneHeart = lazy(() => import('./experiences/StoneHeart'))
 
 const A = '/story/'
 const PG_IMG = 'https://lastfm.freetls.fastly.net/i/u/300x300/474060c6674da147db0cf18a0eb0292e.jpg'
@@ -363,8 +365,18 @@ function Subscribe({ replay }: { replay: () => void }) {
 }
 
 export default function App() {
+  const hash = typeof window !== 'undefined' ? window.location.hash : ''
   const [scene, setScene] = useState(0)
   const next = () => setScene(s => Math.min(8, s + 1))
+
+  if (hash === '#stone-heart') {
+    return (
+      <Suspense fallback={<div style={{background:'#000',width:'100vw',height:'100vh'}}/>}>
+        <StoneHeart />
+      </Suspense>
+    )
+  }
+
   const pages = [
     <Pt5Intro next={next} />,
     <ArtistSelect onSelect={next} />,
